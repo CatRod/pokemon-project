@@ -122,7 +122,7 @@ const gymArena = engine.create({
 gymArena.executeBefore(function () {
   if (player1.arrPokemon.length < 1 && player1.health !== 100) {
     console.log(
-      "You have to catch at least 1 pokemon to battle your opponent and to restore your health!"
+      "You have to catch at least 1 pokemon to battle your opponent and you need to restore your health!"
     );
     return false;
   }
@@ -134,7 +134,7 @@ gymArena.addQuestion({
   action: function (answer) {
     if (answer === true) {
       console.log("I have " + player1.arrPokemon.length + " Pokemon"); //Vou ver quantos pokemon tenho
-      console.log("\nYou are fighting with " + currentGymLeader.description);
+      console.log("\nYou are fighting with " + currentGymLeader.name);
       console.log("\nLet's go!");
 
       player1.arrPokemon.forEach((pokemon) => {
