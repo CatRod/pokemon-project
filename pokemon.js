@@ -117,7 +117,6 @@ const gymArena = engine.create({
   name: "Gym Arena",
 });
 
-//Losing puts your team health at 0 and you are not allowed to fight until you are fully healed again
 
 gymArena.executeBefore(function () {
   if (player1.arrPokemon.length < 1 && player1.health !== 100) {
@@ -144,6 +143,7 @@ gymArena.addQuestion({
           player1.probability -= 12.5;
         }
       });
+
       let randomNum = Math.floor(Math.random() * 101);
 
       console.log(
@@ -170,6 +170,7 @@ gymArena.addQuestion({
             pokemon.health = 0;
           }
         });
+        player1.health = 0;
         console.log(
           "\nYou have to change your team of pokemon or take a power nap at the town to restore your pokemon's health!!\n"
         );
