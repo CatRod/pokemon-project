@@ -26,6 +26,7 @@ let player1 = {
   probability: 50, //adicionei isto para dar para calcular a probabilidade final
   wins: 0,
   badge: [],
+  health: 0,
 };
 
 engine.setMenuPrompt("Where do you want to go first?");
@@ -63,19 +64,13 @@ theTown.addQuestion({
   action: function (answer) {
     if (answer === "Know my opponent") {
       console.log(currentGymLeader);
-    } else if(answer === "Rest"){
-      player1.arrPokemon.forEach((pokemon) => {
-        if (pokemon.health !== 100) {
-          pokemon.health = 100;
-        } 
-      })
-    }
-    else {
+    } else if (answer === "Rest") {
+      player1.health = 100;
+    } else {
       engine.quit();
     }
   },
 });
-
 
 const safariZone = engine.create({
   type: "stage",
@@ -126,15 +121,13 @@ const gymArena = engine.create({
 //Losing puts your team health at 0 and you are not allowed to fight until you are fully healed again
 
 gymArena.executeBefore(function () {
-  if (player1.arrPokemon.length < 1) {
+  if (player1.arrPokemon.length < 1 && player1.health !== 100) {
     console.log(
-      "You have to catch at least 1 pokemon to battle your opponent!"
+      "You have to catch at least 1 pokemon to battle your opponent and to restore your health!"
     );
     return false;
   }
 });
-
-//Winning gives you a badge
 
 gymArena.addQuestion({
   type: "confirm",
@@ -159,7 +152,7 @@ gymArena.addQuestion({
           player1.probability +
           " and the random number is " +
           randomNum
-      ); //Isto é opcional...
+      );
 
       if (player1.probability > randomNum) {
         console.log(
@@ -173,7 +166,14 @@ gymArena.addQuestion({
         }
         gymLeader();
       } else {
-        console.log("\nYou have to change your team of pokemon!\n");
+        player1.arrPokemon.forEach((pokemon) => {
+          if (pokemon.health === 100) {
+            pokemon.health = 0;
+          }
+        });
+        console.log(
+          "\nYou have to change your team of pokemon or take a power nap at the town to restore your pokemon's health!!\n"
+        );
       }
       player1.probability = 50; //para dar reset à minha probabilidade (se não vai estar sempre a somar)
     } else {
