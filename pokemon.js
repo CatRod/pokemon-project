@@ -1,6 +1,6 @@
 const engine = require("workshop-engine");
 
-//Fazer aqui o .showBanner (mais tarde)
+engine.showBanner("Pokemon");
 
 const grass = { name: "Bulbasaur", type: "grass", strong: true };
 const fire = { name: "Charmander", type: "fire", strong: true };
