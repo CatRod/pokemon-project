@@ -21,7 +21,7 @@ let currentGymLeader = {
 
 let player1 = {
   name: "Catarina", //aqui quero associar o nome do player quando perguntado no ínicio...
-  arrPokemon: [],
+  arrPokemon: [], //vou guardar os pokemon que apanho na SafariZone
   probability: 50, //adicionei isto para dar para calcular a probabilidade final
   wins: 0,
 };
