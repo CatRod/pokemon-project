@@ -63,6 +63,11 @@ theTown.addQuestion({
       console.log(currentGymLeader);
     } else if (answer === "Rest") {
       player1.health = 100;
+      console.log(
+        "Good! Now your health is " +
+          player1.health +
+          "\nYou are good to battle again!"
+      );
       //Adiciono na mesma aqui o forEach para dar 100 de health aos pokemon individualmente??
     } else {
       engine.quit();
@@ -82,9 +87,8 @@ const safariZone = engine.create({
 safariZone.addQuestion({
   type: "list",
   message: "Choose to visit",
-  options: ["Grasslands", "River", "Volcano", "Release Team"],
+  options: ["Grasslands", "River", "Volcano", "My Team", "Release Team"],
   action: function (answer) {
-    console.log(player1.arrPokemon);
     if (answer === "Release Team") {
       console.log("No Pokemon. Let's capture.");
       player1.arrPokemon = []; // Adiciona 1 ao arrPokemon
@@ -96,18 +100,17 @@ safariZone.addQuestion({
     } else if (answer === "Grasslands") {
       console.log("You caught a " + grass.name);
       player1.arrPokemon.push(grass); // Adiciona 1 ao arrPokemon
-      console.log(player1.arrPokemon); // validar a contagem de nº de Pokemon
       return player1.arrPokemon;
     } else if (answer === "River") {
       console.log("You caught a " + water.name);
       player1.arrPokemon.push(water); // Adiciona 1 ao arrPokemon
-      console.log(player1.arrPokemon); // validar a contagem de nº de Pokemon
       return player1.arrPokemon;
     } else if (answer === "Volcano") {
       console.log("You caught a " + fire.name);
       player1.arrPokemon.push(fire); // Adiciona 1 ao arrPokemon
-      console.log(player1.arrPokemon); // validar a contagem de nº de Pokemon
       return player1.arrPokemon;
+    } else if (answer === "My Team") {
+      console.log(player1.arrPokemon); // Adicionei aqui uma forma de podermos ver a nossa equipa!!
     }
   },
 });
@@ -117,12 +120,11 @@ const gymArena = engine.create({
   name: "Gym Arena",
 });
 
-
 gymArena.executeBefore(function () {
-  if (player1.arrPokemon.length < 1 && player1.health !== 100) {
+  if (player1.arrPokemon.length < 1 || player1.health !== 100) {
     console.log(
       "You have to catch at least 1 pokemon to battle your opponent and you need to restore your health!"
-    );
+    ); //Isto não está a funcionar com o &&, por isso passei a || , porque quando queremos combater outra vez, temos pokemon mas não temos health.. Isto deixa de funcionar.
     return false;
   }
 });
@@ -159,6 +161,7 @@ gymArena.addQuestion({
         );
         player1.wins++;
         player1.badge.push(currentGymLeader.badge);
+        console.log("Now you have " + player1.badge + " badge(s)!");
         if (player1.wins === 3) {
           console.log("No more gym leaders, GAME FINISHED !");
           engine.quit();
