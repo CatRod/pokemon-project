@@ -54,9 +54,6 @@ const theTown = engine.create({
   name: "The Town",
 });
 
-//Agora podemos descansar aqui "rest"
-//Criar uma lista como na safari
-
 theTown.addQuestion({
   type: "list",
   message: "What do you wish to do now?",
@@ -66,6 +63,7 @@ theTown.addQuestion({
       console.log(currentGymLeader);
     } else if (answer === "Rest") {
       player1.health = 100;
+      //Adiciono na mesma aqui o forEach para dar 100 de health aos pokemon individualmente??
     } else {
       engine.quit();
     }
@@ -86,10 +84,11 @@ safariZone.addQuestion({
   message: "Choose to visit",
   options: ["Grasslands", "River", "Volcano", "Release Team"],
   action: function (answer) {
+    console.log(player1.arrPokemon);
     if (answer === "Release Team") {
       console.log("No Pokemon. Let's capture.");
       player1.arrPokemon = []; // Adiciona 1 ao arrPokemon
-      console.log(player1); // validar a contagem de nº de Pokemon
+      console.log(player1.arrPokemon); // validar a contagem de nº de Pokemon
       return;
     } else if (player1.arrPokemon.length >= 4) {
       console.log("You cannot catch more Pokemon. You already have 4.");
@@ -97,17 +96,17 @@ safariZone.addQuestion({
     } else if (answer === "Grasslands") {
       console.log("You caught a " + grass.name);
       player1.arrPokemon.push(grass); // Adiciona 1 ao arrPokemon
-      console.log(player1); // validar a contagem de nº de Pokemon
+      console.log(player1.arrPokemon); // validar a contagem de nº de Pokemon
       return player1.arrPokemon;
     } else if (answer === "River") {
       console.log("You caught a " + water.name);
       player1.arrPokemon.push(water); // Adiciona 1 ao arrPokemon
-      console.log(player1); // validar a contagem de nº de Pokemon
+      console.log(player1.arrPokemon); // validar a contagem de nº de Pokemon
       return player1.arrPokemon;
     } else if (answer === "Volcano") {
       console.log("You caught a " + fire.name);
       player1.arrPokemon.push(fire); // Adiciona 1 ao arrPokemon
-      console.log(player1); // validar a contagem de nº de Pokemon
+      console.log(player1.arrPokemon); // validar a contagem de nº de Pokemon
       return player1.arrPokemon;
     }
   },
