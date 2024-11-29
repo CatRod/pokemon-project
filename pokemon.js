@@ -48,6 +48,9 @@ const theTown = engine.create({
   name: "The Town",
 });
 
+//Agora podemos descansar aqui "rest"
+//Choosing to rest fully heals your pokémon
+
 theTown.addQuestion({
   type: "confirm",
   message: "Do you want to know your opponent?",
@@ -64,6 +67,10 @@ const safariZone = engine.create({
   type: "stage",
   name: "Safari Zone",
 });
+
+//Podemos trocar pokemon
+//If their maximum is reached, when choosing to keep the found pokémon they must choose to replace one on their team
+//The game should display their current team before returning to the menu
 
 safariZone.addQuestion({
   type: "list",
@@ -102,6 +109,8 @@ const gymArena = engine.create({
   name: "Gym Arena",
 });
 
+//Losing puts your team health at 0 and you are not allowed to fight until you are fully healed again
+
 gymArena.executeBefore(function () {
   if (player1.arrPokemon.length < 1) {
     console.log(
@@ -110,6 +119,8 @@ gymArena.executeBefore(function () {
     return false;
   }
 });
+
+//Winning gives you a badge
 
 gymArena.addQuestion({
   type: "confirm",
@@ -156,5 +167,10 @@ gymArena.addQuestion({
     }
   },
 });
+
+//Adicionar a Legendary Cave
+//Adicionar pokemon legendary
+//Vamos ter vários pokemon e temos de adivinhar o nome do pokemon para o conseguir apanhar (podemos usar o math.random)
+//
 
 engine.run();
