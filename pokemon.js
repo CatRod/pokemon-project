@@ -82,7 +82,6 @@ const safariZone = engine.create({
 
 //Podemos trocar pokemon
 //If their maximum is reached, when choosing to keep the found pokémon they must choose to replace one on their team
-//The game should display their current team before returning to the menu
 
 safariZone.addQuestion({
   type: "list",
