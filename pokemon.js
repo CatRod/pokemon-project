@@ -2,14 +2,14 @@ const engine = require("workshop-engine");
 
 engine.showBanner("Pokemon");
 
-const grass = { name: "Bulbasaur", type: "grass", strong: true };
-const fire = { name: "Charmander", type: "fire", strong: true };
-const water = { name: "Squirtle", type: "water", strong: true };
+const grass = { name: "Bulbasaur", type: "grass", health: 100 };
+const fire = { name: "Charmander", type: "fire", health: 100 };
+const water = { name: "Squirtle", type: "water", health: 100 };
 
 const leaders = [
-  "Erika, a grass gym leader.\nWeaknesses: fire \nStrengths: water",
-  "Misty, a water gym leader.\nWeaknesses: grass \nStrengths: fire",
-  "Blaine, a fire gym leader.\nWeaknesses: water \nStrengths: grass",
+  "Erika, a grass gym leader.\nWeaknesses: fire \nStrengths: water \nBadge: cascade",
+  "Misty, a water gym leader.\nWeaknesses: grass \nStrengths: fire \nBadge: volcano",
+  "Blaine, a fire gym leader.\nWeaknesses: water \nStrengths: grass \nBadge: hearth",
 ];
 
 let currentGymLeader = {
@@ -17,6 +17,7 @@ let currentGymLeader = {
   name: "",
   weakness: "",
   strengths: "",
+  badge: "",
 };
 
 let player1 = {
@@ -24,6 +25,7 @@ let player1 = {
   arrPokemon: [], //vou guardar os pokemon que apanho na SafariZone
   probability: 50, //adicionei isto para dar para calcular a probabilidade final
   wins: 0,
+  badge: [],
 };
 
 engine.setMenuPrompt("Where do you want to go first?");
@@ -39,6 +41,9 @@ function gymLeader() {
 
     let nameCurrentGymLeader = currentGymLeader.description.split(",");
     currentGymLeader.name = nameCurrentGymLeader[0];
+
+    let badges = currentGymLeader.description.split(" ");
+    currentGymLeader.badge = badges[9];
   }
 }
 gymLeader();
@@ -49,19 +54,28 @@ const theTown = engine.create({
 });
 
 //Agora podemos descansar aqui "rest"
-//Choosing to rest fully heals your pokémon
+//Criar uma lista como na safari
 
 theTown.addQuestion({
-  type: "confirm",
-  message: "Do you want to know your opponent?",
+  type: "list",
+  message: "What do you wish to do now?",
+  options: ["Know my opponent", "Rest"],
   action: function (answer) {
-    if (answer === true) {
+    if (answer === "Know my opponent") {
       console.log(currentGymLeader);
-    } else {
+    } else if(answer === "Rest"){
+      player1.arrPokemon.forEach((pokemon) => {
+        if (pokemon.health !== 100) {
+          pokemon.health = 100;
+        } 
+      })
+    }
+    else {
       engine.quit();
     }
   },
 });
+
 
 const safariZone = engine.create({
   type: "stage",
@@ -152,7 +166,7 @@ gymArena.addQuestion({
           "\nCongrats, YOU WON against " + currentGymLeader.name + " !!"
         );
         player1.wins++;
-
+        player1.badge.push(currentGymLeader.badge);
         if (player1.wins === 3) {
           console.log("No more gym leaders, GAME FINISHED !");
           engine.quit();
